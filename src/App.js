@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
+import Logo from './components/Logo/Logo';
 
 class App extends Component {
   constructor() {
@@ -18,8 +19,9 @@ class App extends Component {
     const { isSignedIn } = this.state;
 
     return (
-      <div className='App'>
+      <div className="App">
         <Navigation isSignedIn={isSignedIn} />
+        <Logo />
       </div>
     );
   }
