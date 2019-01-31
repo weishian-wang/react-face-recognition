@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
+import UserRank from './components/UserRank/UserRank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import './App.css';
 
 const particlesOptions = {
   particles: {
     number: {
-      value: 60,
+      value: 50,
       density: {
         enable: true,
-        value_area: 450
+        value_area: 400
       }
     }
   }
@@ -37,6 +38,7 @@ class App extends Component {
         <Particles className="particles" params={particlesOptions} />
         <Navigation isSignedIn={isSignedIn} />
         <Logo />
+        <UserRank />
         <ImageLinkForm />
       </div>
     );
