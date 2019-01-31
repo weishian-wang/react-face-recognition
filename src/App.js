@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
-import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import './App.css';
 
 const particlesOptions = {
   particles: {
@@ -36,6 +37,7 @@ class App extends Component {
         <Particles className="particles" params={particlesOptions} />
         <Navigation isSignedIn={isSignedIn} />
         <Logo />
+        <ImageLinkForm />
       </div>
     );
   }
