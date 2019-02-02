@@ -20,7 +20,7 @@ class App extends Component {
       isSignedIn: false,
       input: "",
       imageUrl: "",
-      box: {}
+      boxes: []
     };
   }
 
@@ -28,25 +28,27 @@ class App extends Component {
     document.title = "React Face Recognition";
   }
 
-  calculateFaceLocation = data => {
-    const faceRegion = data.outputs[0].data.regions[0].region_info.bounding_box;
+  calculateFaceLocation = (data) => {
     const img = document.getElementById("inputImage");
     const imgWidth = Number(img.width);
     const imgHeight = Number(img.height);
-    return {
-      topRow: faceRegion.top_row * imgHeight,
-      rightCol: imgWidth - faceRegion.right_col * imgWidth,
-      bottomRow: imgHeight - faceRegion.bottom_row * imgHeight,
-      leftCol: faceRegion.left_col * imgWidth
-    };
+    const boxes = data.outputs[0].data.regions.map(region => {
+      const { top_row, right_col, bottom_row, left_col } = region.region_info.bounding_box;
+      return {
+        topRow: top_row * imgHeight,
+        rightCol: imgWidth - right_col * imgWidth,
+        bottomRow: imgHeight - bottom_row * imgHeight,
+        leftCol: left_col * imgWidth
+      };
+    });
+    return boxes;
   };
 
-  displayFaceBoundingBox = box => {
-    console.log("box:", box);
-    this.setState({ box: box });
+  displayFaceBoundingBox = (boxes) => {
+    this.setState({ boxes: boxes });
   };
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     this.setState({ input: event.target.value });
   };
 
@@ -59,7 +61,7 @@ class App extends Component {
   };
 
   render() {
-    const { isSignedIn, imageUrl, box } = this.state;
+    const { isSignedIn, imageUrl, boxes } = this.state;
 
     return (
       <div className="App">
@@ -71,7 +73,7 @@ class App extends Component {
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit}
         />
-        <FaceRecognition imageUrl={imageUrl} box={box} />
+        <FaceRecognition imageUrl={imageUrl} boxes={boxes} />
       </div>
     );
   }
