@@ -97,7 +97,7 @@ class App extends Component {
   };
 
   render() {
-    const { isSignedIn, imageUrl, boxes, route } = this.state;
+    const { isSignedIn, imageUrl, boxes, route, user } = this.state;
 
     return (
       <div className="App">
@@ -109,7 +109,7 @@ class App extends Component {
         {route === 'home' ? (
           <div>
             <Logo />
-            <UserRank />
+            <UserRank name={user.name} entries={user.entries} />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
