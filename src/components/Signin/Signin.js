@@ -26,8 +26,11 @@ class Signin extends Component {
         password: this.state.password
       })
     })
-      .then(res => {
-        if (res.status === 200) {
+      .then(res => res.json())
+      .then(user => {
+        if (user.id) {
+          console.log(user);
+          this.props.loadUser(user);
           this.props.onRouteChange('home');
         }
       });

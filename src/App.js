@@ -38,6 +38,18 @@ class App extends Component {
     document.title = 'React Face Recognition';
   }
 
+  loadUser = data => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+      }
+    });
+  };
+
   calculateFaceLocation = data => {
     const img = document.getElementById('inputImage');
     const imgWidth = Number(img.width);
@@ -105,7 +117,7 @@ class App extends Component {
             <FaceRecognition imageUrl={imageUrl} boxes={boxes} />
           </div>
         ) : route === 'signin' || route === 'signout' ? (
-          <Signin onRouteChange={this.onRouteChange} />
+          <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : (
           <Register onRouteChange={this.onRouteChange} />
         )}
