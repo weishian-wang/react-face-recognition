@@ -23,7 +23,14 @@ class App extends Component {
       input: '',
       imageUrl: '',
       boxes: [],
-      route: 'signin'
+      route: 'signin',
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     };
   }
 
@@ -31,11 +38,11 @@ class App extends Component {
     document.title = 'React Face Recognition';
   }
 
-  calculateFaceLocation = (data) => {
+  calculateFaceLocation = data => {
     const img = document.getElementById('inputImage');
     const imgWidth = Number(img.width);
     const imgHeight = Number(img.height);
-    const boxes = data.outputs[0].data.regions.map((region) => {
+    const boxes = data.outputs[0].data.regions.map(region => {
       const {
         top_row,
         right_col,
@@ -52,11 +59,11 @@ class App extends Component {
     return boxes;
   };
 
-  displayFaceBoundingBox = (boxes) => {
+  displayFaceBoundingBox = boxes => {
     this.setState({ boxes: boxes });
   };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
@@ -64,13 +71,11 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((res) =>
-        this.displayFaceBoundingBox(this.calculateFaceLocation(res))
-      )
-      .catch((err) => console.log(err));
+      .then(res => this.displayFaceBoundingBox(this.calculateFaceLocation(res)))
+      .catch(err => console.log(err));
   };
 
-  onRouteChange = (route) => {
+  onRouteChange = route => {
     if (route === 'signout') {
       this.setState({ isSignedIn: false });
     } else if (route === 'home') {
