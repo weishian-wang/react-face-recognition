@@ -69,17 +69,24 @@ class App extends Component {
     this.setState({ boxes: boxes });
   };
 
+  clearFaceBoundingBox = () => {
+    this.setState({ boxes: [] });
+  };
+
   onInputChange = event => {
     this.setState({ input: event.target.value });
   };
 
   onImageSubmit = () => {
+    this.clearFaceBoundingBox();
     this.setState({ imageUrl: this.state.input });
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
       .then(res => {
-        // If it's a successful image submission
-        if (res.status.code === 10000) {
+        // Display face bounding box(es) and update user entries only if
+        // 1) it's a successful image submission
+        // 2) image contains human face(s)
+        if (res.status.code === 10000 && res.outputs[0].data.regions) {
           this.displayFaceBoundingBox(this.calculateFaceLocation(res));
           return fetch('http://localhost:8080/image', {
             method: 'PUT',
@@ -87,12 +94,14 @@ class App extends Component {
             body: JSON.stringify({
               id: this.state.user.id
             })
-          });
+          })
+            .then(res => res.json())
+            .then(entries => {
+              this.setState(
+                Object.assign(this.state.user, { entries: entries })
+              );
+            });
         }
-      })
-      .then(res => res.json())
-      .then(entries => {
-        this.setState(Object.assign(this.state.user, { entries: entries }));
       })
       .catch(err => console.log(err));
   };
