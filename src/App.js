@@ -87,21 +87,18 @@ class App extends Component {
         // If it's a successful image submission
         if (res.status.code === 10000) {
           this.displayFaceBoundingBox(this.calculateFaceLocation(res));
-          fetch('http://localhost:8080/image', {
+          return fetch('http://localhost:8080/image', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               id: this.state.user.id
             })
-          })
-            .then(res => res.json())
-            .then(entries =>
-              this.setState(
-                Object.assign(this.state.user, { entries: entries })
-              )
-            )
-            .catch(err => console.log(err));
+          });
         }
+      })
+      .then(res => res.json())
+      .then(entries => {
+        this.setState(Object.assign(this.state.user, { entries: entries }));
       })
       .catch(err => console.log(err));
   };
