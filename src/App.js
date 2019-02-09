@@ -122,7 +122,7 @@ class App extends Component {
             <UserRank name={user.name} entries={user.entries} />
             <ImageLinkForm
               onInputChange={this.onInputChange}
-              onPictureSubmit={this.onImageSubmit}
+              onImageSubmit={this.onImageSubmit}
             />
             <FaceRecognition imageUrl={imageUrl} boxes={boxes} />
           </div>
