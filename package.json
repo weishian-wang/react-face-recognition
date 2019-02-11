@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://weishian-wang.github.io/react-face-recognition",
   "dependencies": {
+    "calidation": "^1.7.0",
     "clarifai": "^2.9.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
