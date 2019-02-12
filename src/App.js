@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Clarifai from 'clarifai';
 
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
@@ -10,10 +9,6 @@ import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Particle from './components/Particle/Particle';
 import './App.css';
-
-const app = new Clarifai.App({
-  apiKey: 'f1e09f227ca843f29d7c628d9a25eeff'
-});
 
 const initialState = {
   isSignedIn: false,
@@ -82,14 +77,25 @@ class App extends Component {
   onImageSubmit = () => {
     this.clearFaceBoundingBox();
     this.setState({ imageUrl: this.state.input });
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    fetch('http://localhost:8080/imageurl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        imageUrl: this.state.input
+      })
+    })
       .then(res => {
+        if (res.status === 400) {
+          return null;
+        }
+        return res.json();
+      })
+      .then(data => {
         // Display face bounding box(es) and update user entries only if
         // 1) it's a successful image submission
         // 2) image contains human face(s)
-        if (res.status.code === 10000 && res.outputs[0].data.regions) {
-          this.displayFaceBoundingBox(this.calculateFaceLocation(res));
+        if (data && data.status.code === 10000 && data.outputs[0].data.regions) {
+          this.displayFaceBoundingBox(this.calculateFaceLocation(data));
           return fetch('http://localhost:8080/image', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
