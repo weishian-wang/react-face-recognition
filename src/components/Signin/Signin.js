@@ -80,7 +80,7 @@ class Signin extends Component {
                       onChange={this.onEmailChange}
                     />
                     {submitted && errors.email && (
-                      <span className="dark-red fw7">{errors.email}</span>
+                      <span className="dark-red fw6">{errors.email}</span>
                     )}
                   </div>
                   <div className="mv3">
@@ -95,7 +95,7 @@ class Signin extends Component {
                       onChange={this.onPasswordChange}
                     />
                     {submitted && errors.password && (
-                      <span className="dark-red fw7">{errors.password}</span>
+                      <span className="dark-red fw6">{errors.password}</span>
                     )}
                   </div>
                 </fieldset>
