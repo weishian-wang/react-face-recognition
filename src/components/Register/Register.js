@@ -7,6 +7,10 @@ const config = {
     isMinLength: {
       message: 'Your name must at least be 2 characters long',
       length: 2
+    },
+    isMaxLength: {
+      message: 'Your name can at most have 50 characters',
+      length: 50,
     }
   },
   email: {

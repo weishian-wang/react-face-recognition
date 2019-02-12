@@ -85,7 +85,7 @@ class App extends Component {
       })
     })
       .then(res => {
-        if (res.status === 400) {
+        if (res.status !== 200) {
           return null;
         }
         return res.json();
