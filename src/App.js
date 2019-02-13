@@ -132,6 +132,7 @@ class App extends Component {
         <Navigation
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
+          email={user.email}
         />
         {route === 'home' ? (
           <div>
