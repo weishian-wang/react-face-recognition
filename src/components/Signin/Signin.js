@@ -43,9 +43,9 @@ class Signin extends Component {
         })
       })
         .then(res => res.json())
-        .then(userData => {
-          if (userData.user_id) {
-            this.props.loadUser(userData);
+        .then(data => {
+          if (data.userData.user_id && data.token) {
+            this.props.loadUser(data.userData, data.token);
             this.props.onRouteChange('home');
           }
         })

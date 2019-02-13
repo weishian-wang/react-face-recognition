@@ -22,7 +22,8 @@ const initialState = {
     email: '',
     entries: 0,
     joined: ''
-  }
+  },
+  token: null
 };
 
 class App extends Component {
@@ -33,12 +34,38 @@ class App extends Component {
 
   componentDidMount() {
     document.title = 'React Face Recognition';
+    const token = localStorage.getItem('token');
+    const expiryDate = localStorage.getItem('expiryDate');
+    if (token && expiryDate && new Date(expiryDate) <= new Date()) {
+      this.onRouteChange('signout');
+      return;
+    }
   }
 
-  loadUser = userData => {
+  onRouteChange = route => {
+    if (route === 'signout') {
+      this.signoutHandler();
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true });
+    }
+    this.setState({ route: route });
+  };
+
+  signoutHandler = () => {
+    this.setState(initialState);
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiryDate');
+  };
+
+  loadUser = (userData, token) => {
     this.setState({
-      user: { ...userData }
+      user: { ...userData },
+      token: token
     });
+    localStorage.setItem('token', token);
+    const remainingMilliseconds = 60 * 60 * 1000;
+    const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
+    localStorage.setItem('expiryDate', expiryDate.toISOString());
   };
 
   calculateFaceLocation = data => {
@@ -79,7 +106,10 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     fetch('http://localhost:8080/imageurl', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: 'Bearer ' + this.state.token,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         imageUrl: this.state.input
       })
@@ -94,11 +124,18 @@ class App extends Component {
         // Display face bounding box(es) and update user entries only if
         // 1) it's a successful image submission
         // 2) image contains human face(s)
-        if (data && data.status.code === 10000 && data.outputs[0].data.regions) {
+        if (
+          data &&
+          data.status.code === 10000 &&
+          data.outputs[0].data.regions
+        ) {
           this.displayFaceBoundingBox(this.calculateFaceLocation(data));
           return fetch('http://localhost:8080/image', {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              Authorization: 'Bearer ' + this.state.token,
+              'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
               user_id: this.state.user.user_id
             })
@@ -112,15 +149,6 @@ class App extends Component {
         }
       })
       .catch(err => console.log(err));
-  };
-
-  onRouteChange = route => {
-    if (route === 'signout') {
-      this.setState(initialState);
-    } else if (route === 'home') {
-      this.setState({ isSignedIn: true });
-    }
-    this.setState({ route: route });
   };
 
   render() {
