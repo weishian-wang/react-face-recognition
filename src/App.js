@@ -17,7 +17,7 @@ const initialState = {
   boxes: [],
   route: 'signin',
   user: {
-    id: '',
+    user_id: '',
     name: '',
     email: '',
     entries: 0,
@@ -100,7 +100,7 @@ class App extends Component {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              id: this.state.user.id
+              user_id: this.state.user.user_id
             })
           })
             .then(res => res.json())
