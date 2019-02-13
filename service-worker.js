@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/react-face-recognition/precache-manifest.181fdbcf61e75ac50c13a84d11156129.js"
+  "/react-face-recognition/precache-manifest.f79920f764e3aa8698e9dbcc7630554b.js"
 );
 
 workbox.clientsClaim();
