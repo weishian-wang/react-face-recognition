@@ -32,14 +32,31 @@ class App extends Component {
     this.state = initialState;
   }
 
-  componentDidMount() {
-    document.title = 'React Face Recognition';
+  componentWillMount() {
     const token = localStorage.getItem('token');
     const expiryDate = localStorage.getItem('expiryDate');
-    if (token && expiryDate && new Date(expiryDate) <= new Date()) {
+    if (!token || !expiryDate || new Date(expiryDate) <= new Date()) {
       this.onRouteChange('signout');
       return;
     }
+    const user_id = localStorage.getItem('user_id');
+    fetch('http://localhost:8080/profile/' + user_id, {
+      method: 'GET',
+      headers: { Authorization: 'Bearer ' + token }
+    })
+      .then(res => res.json())
+      .then(userData => {
+        this.setState({
+          user: { ...userData },
+          token: token
+        });
+        this.onRouteChange('home');
+      })
+      .catch(err => console.log(err));
+  }
+
+  componentDidMount() {
+    document.title = 'React Face Recognition';
   }
 
   onRouteChange = route => {
@@ -53,6 +70,7 @@ class App extends Component {
 
   signoutHandler = () => {
     this.setState(initialState);
+    localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     localStorage.removeItem('expiryDate');
   };
@@ -62,6 +80,7 @@ class App extends Component {
       user: { ...userData },
       token: token
     });
+    localStorage.setItem('user_id', userData.user_id);
     localStorage.setItem('token', token);
     const remainingMilliseconds = 60 * 60 * 1000;
     const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
