@@ -50,7 +50,7 @@ class Register extends Component {
 
   onSubmitRegister = ({ errors, fields, isValid }) => {
     if (isValid) {
-      fetch('http://localhost:8080/register', {
+      fetch(`${process.env.REACT_APP_DOMAIN}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -40,7 +40,7 @@ class App extends Component {
       return;
     }
     const user_id = localStorage.getItem('user_id');
-    fetch('http://localhost:8080/profile/' + user_id, {
+    fetch(`${process.env.REACT_APP_DOMAIN}/profile/${user_id}`, {
       method: 'GET',
       headers: { Authorization: 'Bearer ' + token }
     })
@@ -123,7 +123,7 @@ class App extends Component {
   onImageSubmit = () => {
     this.clearFaceBoundingBox();
     this.setState({ imageUrl: this.state.input });
-    fetch('http://localhost:8080/imageurl', {
+    fetch(`${process.env.REACT_APP_DOMAIN}/imageurl`, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + this.state.token,
@@ -149,7 +149,7 @@ class App extends Component {
           data.outputs[0].data.regions
         ) {
           this.displayFaceBoundingBox(this.calculateFaceLocation(data));
-          return fetch('http://localhost:8080/image', {
+          return fetch(`${process.env.REACT_APP_DOMAIN}/image`, {
             method: 'PUT',
             headers: {
               Authorization: 'Bearer ' + this.state.token,

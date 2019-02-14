@@ -34,7 +34,7 @@ class Signin extends Component {
 
   onSubmitSignIn = ({ errors, fields, isValid }) => {
     if (isValid) {
-      fetch('http://localhost:8080/signin', {
+      fetch(`${process.env.REACT_APP_DOMAIN}/signin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
