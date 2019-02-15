@@ -12,3 +12,10 @@
   color: white;
   padding: 1em;
 }
+
+.header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
@@ -203,21 +203,23 @@ class App extends Component {
       <div className="App">
         {showError && <div className="error-message">{errorMessage}</div>}
         <Particle />
-        <Navigation
-          isSignedIn={isSignedIn}
-          onRouteChange={this.onRouteChange}
-          email={user.email}
-        />
+        <div className="header">
+          <Logo />
+          <Navigation
+            isSignedIn={isSignedIn}
+            onRouteChange={this.onRouteChange}
+            email={user.email}
+          />
+        </div>
         {route === 'home' ? (
-          <div>
-            <Logo />
+          <Fragment>
             <UserRank name={user.name} entries={user.entries} />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onImageSubmit={this.onImageSubmit}
             />
             <FaceRecognition imageUrl={imageUrl} boxes={boxes} />
-          </div>
+          </Fragment>
         ) : route === 'signin' || route === 'signout' ? (
           <Signin
             onRouteChange={this.onRouteChange}
