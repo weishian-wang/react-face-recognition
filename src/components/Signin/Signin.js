@@ -44,12 +44,16 @@ class Signin extends Component {
       })
         .then(res => res.json())
         .then(data => {
+          if (data.errorMsg) {
+            this.props.handleError(data.errorMsg);
+            throw new Error(data.errorMsg);
+          }
           if (data.userData.user_id && data.token) {
             this.props.loadUser(data.userData, data.token);
             this.props.onRouteChange('home');
           }
         })
-        .catch(err => console.log(err));
+        .catch(console.log);
     }
   };
 

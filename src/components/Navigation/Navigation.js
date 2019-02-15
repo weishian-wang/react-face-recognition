@@ -5,7 +5,7 @@ const Navigation = ({ isSignedIn, onRouteChange, email }) => {
   if (isSignedIn) {
     return (
       <nav>
-        <p className="f5 black underline pt4 pr2">
+        <p className="f5 dark-gray underline pt4 pr2">
           {email}
         </p>
         <p

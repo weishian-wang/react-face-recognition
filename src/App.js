@@ -23,7 +23,9 @@ const initialState = {
     entries: 0,
     joined: ''
   },
-  token: null
+  token: null,
+  showError: false,
+  errorMessage: ''
 };
 
 class App extends Component {
@@ -32,7 +34,8 @@ class App extends Component {
     this.state = initialState;
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    document.title = 'React Face Recognition';
     const token = localStorage.getItem('token');
     const expiryDate = localStorage.getItem('expiryDate');
     if (!token || !expiryDate || new Date(expiryDate) <= new Date()) {
@@ -46,29 +49,44 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(userData => {
+        if (userData.errorMsg) {
+          this.handleError(userData.errorMsg);
+          throw new Error(userData.errorMsg);
+        }
         this.setState({
           user: { ...userData },
           token: token
         });
         this.onRouteChange('home');
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   }
 
-  componentDidMount() {
-    document.title = 'React Face Recognition';
-  }
+  handleError = message => {
+    this.setState({
+      showError: true,
+      errorMessage: message
+    });
+  };
+
+  clearError = () => {
+    this.setState({
+      showError: false,
+      errorMessage: ''
+    });
+  };
 
   onRouteChange = route => {
+    this.clearError();
     if (route === 'signout') {
-      this.signoutHandler();
+      this.handleSignout();
     } else if (route === 'home') {
       this.setState({ isSignedIn: true });
     }
     this.setState({ route: route });
   };
 
-  signoutHandler = () => {
+  handleSignout = () => {
     this.setState(initialState);
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
@@ -121,6 +139,7 @@ class App extends Component {
   };
 
   onImageSubmit = () => {
+    this.clearError();
     this.clearFaceBoundingBox();
     this.setState({ imageUrl: this.state.input });
     fetch(`${process.env.REACT_APP_DOMAIN}/imageurl`, {
@@ -133,21 +152,16 @@ class App extends Component {
         imageUrl: this.state.input
       })
     })
-      .then(res => {
-        if (res.status !== 200) {
-          return null;
-        }
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => {
+        if (data.errorMsg) {
+          this.handleError(data.errorMsg);
+          throw new Error(data.errorMsg);
+        }
         // Display face bounding box(es) and update user entries only if
         // 1) it's a successful image submission
         // 2) image contains human face(s)
-        if (
-          data &&
-          data.status.code === 10000 &&
-          data.outputs[0].data.regions
-        ) {
+        if (data.status.code === 10000 && data.outputs[0].data.regions) {
           this.displayFaceBoundingBox(this.calculateFaceLocation(data));
           return fetch(`${process.env.REACT_APP_DOMAIN}/image`, {
             method: 'PUT',
@@ -161,20 +175,33 @@ class App extends Component {
           })
             .then(res => res.json())
             .then(entries => {
+              if (entries.errorMsg) {
+                this.handleError(entries.errorMsg);
+                throw new Error(entries.errorMsg);
+              }
               this.setState(
                 Object.assign(this.state.user, { entries: entries })
               );
             });
         }
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   };
 
   render() {
-    const { isSignedIn, imageUrl, boxes, route, user } = this.state;
+    const {
+      isSignedIn,
+      imageUrl,
+      boxes,
+      route,
+      user,
+      showError,
+      errorMessage
+    } = this.state;
 
     return (
       <div className="App">
+        {showError && <div className="error-message">{errorMessage}</div>}
         <Particle />
         <Navigation
           isSignedIn={isSignedIn}
@@ -192,9 +219,16 @@ class App extends Component {
             <FaceRecognition imageUrl={imageUrl} boxes={boxes} />
           </div>
         ) : route === 'signin' || route === 'signout' ? (
-          <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+          <Signin
+            onRouteChange={this.onRouteChange}
+            loadUser={this.loadUser}
+            handleError={this.handleError}
+          />
         ) : (
-          <Register onRouteChange={this.onRouteChange} />
+          <Register
+            onRouteChange={this.onRouteChange}
+            handleError={this.handleError}
+          />
         )}
       </div>
     );

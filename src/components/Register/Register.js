@@ -62,7 +62,15 @@ class Register extends Component {
         if (res.status === 200) {
           this.props.onRouteChange('signin');
         }
-      });
+        return res.json();
+      })
+      .then(data => {
+        if (data.errorMsg) {
+          this.props.handleError(data.errorMsg);
+          throw new Error(data.errorMsg);
+        }
+      })
+      .catch(console.log);
     }
   };
 
