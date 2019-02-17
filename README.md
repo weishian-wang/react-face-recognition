@@ -1,6 +1,6 @@
 # Face Recognition App - Front End
 
-Face Recognition App is a app for registered user to submit a publicly accessible URL of image, and display blue bounding boxes around each human faces it detects.
+Face Recognition App is an app for registered user to submit a publicly accessible URL of image, displays the image along with blue bounding boxes around each human faces it detects.
 
 ## Built With
 
