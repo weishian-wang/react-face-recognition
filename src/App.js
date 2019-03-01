@@ -179,9 +179,12 @@ class App extends Component {
                 this.handleError(entries.errorMsg);
                 throw new Error(entries.errorMsg);
               }
-              this.setState(
-                Object.assign(this.state.user, { entries: entries })
-              );
+              this.setState({
+                user: {
+                  ...this.state.user,
+                  entries: entries
+                }
+              });
             });
         }
       })
@@ -200,10 +203,10 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div className="App">
-        {showError && <div className="error-message">{errorMessage}</div>}
+      <div className='App'>
+        {showError && <div className='error-message'>{errorMessage}</div>}
         <Particle />
-        <div className="header">
+        <div className='header'>
           <Logo />
           <Navigation
             isSignedIn={isSignedIn}
