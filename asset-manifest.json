@@ -1,15 +1,15 @@
 {
-  "main.css": "/react-face-recognition/static/css/main.e42c2264.chunk.css",
-  "main.js": "/react-face-recognition/static/js/main.c43c585b.chunk.js",
-  "main.js.map": "/react-face-recognition/static/js/main.c43c585b.chunk.js.map",
-  "static/css/1.862ccef7.chunk.css": "/react-face-recognition/static/css/1.862ccef7.chunk.css",
-  "static/js/1.1ae3a1d3.chunk.js": "/react-face-recognition/static/js/1.1ae3a1d3.chunk.js",
-  "static/js/1.1ae3a1d3.chunk.js.map": "/react-face-recognition/static/js/1.1ae3a1d3.chunk.js.map",
-  "runtime~main.js": "/react-face-recognition/static/js/runtime~main.2a5d5ea8.js",
-  "runtime~main.js.map": "/react-face-recognition/static/js/runtime~main.2a5d5ea8.js.map",
-  "static/css/main.e42c2264.chunk.css.map": "/react-face-recognition/static/css/main.e42c2264.chunk.css.map",
-  "static/css/1.862ccef7.chunk.css.map": "/react-face-recognition/static/css/1.862ccef7.chunk.css.map",
+  "main.css": "/react-face-recognition/static/css/main.6b667284.chunk.css",
+  "main.js": "/react-face-recognition/static/js/main.f4e4bc1f.chunk.js",
+  "main.js.map": "/react-face-recognition/static/js/main.f4e4bc1f.chunk.js.map",
+  "runtime~main.js": "/react-face-recognition/static/js/runtime~main.5f95e2ae.js",
+  "runtime~main.js.map": "/react-face-recognition/static/js/runtime~main.5f95e2ae.js.map",
+  "static/css/2.511ab858.chunk.css": "/react-face-recognition/static/css/2.511ab858.chunk.css",
+  "static/js/2.48835658.chunk.js": "/react-face-recognition/static/js/2.48835658.chunk.js",
+  "static/js/2.48835658.chunk.js.map": "/react-face-recognition/static/js/2.48835658.chunk.js.map",
   "index.html": "/react-face-recognition/index.html",
-  "precache-manifest.6e8bbb53f5812eb7a888a0384f28c6d7.js": "/react-face-recognition/precache-manifest.6e8bbb53f5812eb7a888a0384f28c6d7.js",
-  "service-worker.js": "/react-face-recognition/service-worker.js"
+  "precache-manifest.296075db620a7631346912155b101bbb.js": "/react-face-recognition/precache-manifest.296075db620a7631346912155b101bbb.js",
+  "service-worker.js": "/react-face-recognition/service-worker.js",
+  "static/css/2.511ab858.chunk.css.map": "/react-face-recognition/static/css/2.511ab858.chunk.css.map",
+  "static/css/main.6b667284.chunk.css.map": "/react-face-recognition/static/css/main.6b667284.chunk.css.map"
 }
