@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "calidation": "^1.7.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "react-particles-js": "^2.4.2",
-    "react-scripts": "^2.1.5",
+    "react-scripts": "^2.1.8",
     "react-tilty": "^1.2.1",
     "tachyons": "^4.11.1"
   },
