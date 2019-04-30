@@ -8,11 +8,11 @@
     "npm": "6.7.0"
   },
   "dependencies": {
-    "calidation": "^1.10.0",
+    "calidation": "^1.14.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-particles-js": "^2.5.1",
-    "react-scripts": "^2.1.8",
+    "react-particles-js": "^2.6.0",
+    "react-scripts": "3.0.0",
     "react-tilty": "^1.2.1",
     "tachyons": "^4.11.1"
   },
