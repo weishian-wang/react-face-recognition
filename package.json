@@ -4,8 +4,8 @@
   "private": true,
   "homepage": "https://weishian-wang.github.io/react-face-recognition",
   "engines": {
-    "node": "11.12.0",
-    "npm": "6.7.0"
+    "node": "12.0.0",
+    "npm": "6.9.0"
   },
   "dependencies": {
     "calidation": "^1.15.1",
