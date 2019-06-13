@@ -8,12 +8,12 @@
     "npm": "6.9.0"
   },
   "dependencies": {
-    "calidation": "^1.15.1",
+    "calidation": "^1.16.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-particles-js": "^2.6.0",
     "react-scripts": "^3.0.1",
-    "react-tilty": "^1.3.1",
+    "react-tilty": "^1.3.3",
     "tachyons": "^4.11.1"
   },
   "scripts": {
